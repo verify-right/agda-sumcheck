@@ -1,5 +1,13 @@
 # Changelog
 
+## Arbitrary-degree sumcheck and honest-prover completeness
+
+- Circuit polynomials, sum-tree round messages and an executable honest prover.
+- Honest-prover completeness for any circuit and degree bound covering it.
+- Accepted messages have structural degree at most the bound.
+- Oracle agreement for pointwise-equivalent final oracles.
+- Instantiated through `Ring.FromRing`; examples over F₅ and F₁₇.
+
 ## Commutative-ring verifier and arithmetic modulo p ≥ 2
 
 - Verifier parameterised by ring operations, with separate challenge list.

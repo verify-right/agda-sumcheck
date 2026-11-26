@@ -20,11 +20,13 @@ The final check is `p(2,3) = 0`. See [`Examples.agda`](src/Examples.agda) and [`
 - **Derived dictionary** ([`Ring/FromRing.agda`](src/Ring/FromRing.agda)). A `CommutativeRing`, decidable equality and a normalization with `normalize x ≈ x` give the executable `Operations` and all hypotheses of the correctness theorem.
 - **Arithmetic modulo p = k + 2** ([`Modular/Ring.agda`](src/Modular/Ring.agda), [`Modular/Correctness.agda`](src/Modular/Correctness.agda)). Naturals under stdlib's `_≡%[ p ]_` form a `CommutativeRing`; with reduction mod p as normalization, `Ring.FromRing` gives the theorem for every p ≥ 2. Primality is not assumed; composite moduli are accepted.
 
+- **Arbitrary-degree sumcheck with an honest prover** ([`Circuit/Protocol.agda`](src/Circuit/Protocol.agda), [`Circuit/Completeness.agda`](src/Circuit/Completeness.agda)). Polynomials are arithmetic circuits and round messages are unexpanded sums of univariate circuits. `honest-complete` proves that for any circuit, any challenges and the true Boolean-cube sum, the honest transcript is accepted, provided the degree bound is at least the circuit's conservative `bound`. It needs only reflexivity of the executable equality. `Ring.FromRing` instantiates it for any ring with decidable equality, hence for every modulus ([`Modular/CircuitExamples.agda`](src/Modular/CircuitExamples.agda)). [`Circuit/Degree.agda`](src/Circuit/Degree.agda) proves that accepted messages have structural degree at most the bound.
+
 The F₅ modules ([`Sumcheck.agda`](src/Sumcheck.agda), [`FieldLaws.agda`](src/FieldLaws.agda), [`Quest12Bridge.agda`](src/Quest12Bridge.agda)) prove the same equivalence by exhaustive computation.
 
 ## Not proved
 
-These results are verifier/specification equivalence, not cryptographic soundness. Cryptographic soundness would bound the probability, over random challenges, that a false claim is accepted (Schwartz–Zippel; Thaler §4.1). Also not covered: challenge generation, zero knowledge, higher-degree round polynomials and extracted code. [`dishonest-fixed-challenge-accepted`](src/Examples.agda) shows a false claim passing with fixed challenges.
+These results are verifier/specification equivalence, not cryptographic soundness. Cryptographic soundness would bound the probability, over random challenges, that a false claim is accepted (Schwartz–Zippel; Thaler §4.1). Also not covered: challenge generation, zero knowledge, a bridge from circuit degree to formal polynomial degree, and extracted code. The honest prover enumerates the Boolean cube, so it is exponential in the number of variables. [`dishonest-fixed-challenge-accepted`](src/Examples.agda) shows a false claim passing with fixed challenges.
 
 ## Check
 
