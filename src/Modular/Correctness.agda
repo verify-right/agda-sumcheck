@@ -54,3 +54,7 @@ interpolation-at-one : (a b : ℕ) → interpolate (operations k) a b 1 ≈ b
 interpolation-at-one = Derived.interpolation-at-one
 
 module Verified = Derived.Verified
+
+-- Arbitrary-degree circuit sumcheck modulo p.
+module Honest = Derived.Honest
+module CircuitAgreement = Derived.CircuitAgreement

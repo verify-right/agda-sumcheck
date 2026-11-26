@@ -21,6 +21,8 @@ open import Relation.Binary.PropositionalEquality using (_≡_) renaming (refl t
 open import Ring.Verifier using (Operations; MkOperations; interpolate; lagrange)
 import Ring.Correctness as VerifierProof
 import Ring.Interpolation as Interpolation
+import Circuit.Completeness as CircuitCompleteness
+import Circuit.Oracle as CircuitOracle
 
 private
   module I = Interpolation R
@@ -65,3 +67,12 @@ interpolation-at-one a b = trans (normalize-≈ _) (I.linear-at-one a b)
 module Verified = VerifierProof.Correctness operations _≈_ (λ _ → refl)
   same-sound same-complete (λ {x} {x'} {y} {y'} → same-cong {x} {x'} {y} {y'})
   interpolation-correct
+
+-- Arbitrary-degree circuit sumcheck over the same ring.
+same-refl : (a : Carrier) → does (a ≟ a) ≡ true
+same-refl a = same-complete a a refl
+
+module Honest = CircuitCompleteness.Correct operations 0# same-refl
+
+module CircuitAgreement = CircuitOracle.Agreement operations 0# _≈_ (λ _ → refl)
+  (λ {a} {b} {c} {d} → same-cong {a} {b} {c} {d})
