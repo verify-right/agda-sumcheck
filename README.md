@@ -17,7 +17,8 @@ The final check is `p(2,3) = 0`. See [`Examples.agda`](src/Examples.agda) and [`
 
 - **Verifier and specification are equivalent.** `verify-sound` and `verify-complete` ([`Ring/Correctness.agda`](src/Ring/Correctness.agda)) show the Boolean checker accepts exactly the transcripts satisfying the inductive relation `Accepts`. They hold for any operations with a setoid equality, decidable equality and the interpolation identity. `verifyWith-cong` gives invariance under equivalent evaluators and oracles.
 - **Interpolation in any commutative ring** ([`Ring/Interpolation.agda`](src/Ring/Interpolation.agda)). Two-point interpolation equals the Lagrange form; no inverses or primality are needed. `coefficient-evaluation` is a stdlib `Inverse` between coefficients `(a, b)` of `a + bX` and values at 0 and 1, under pointwise setoid equality.
-- **Arithmetic modulo p = k + 2** ([`Modular/Ring.agda`](src/Modular/Ring.agda), [`Modular/Correctness.agda`](src/Modular/Correctness.agda)). Naturals under stdlib's `_≡%[ p ]_` form a `CommutativeRing`, so the theorem holds for every p ≥ 2. Primality is not assumed; composite moduli are accepted.
+- **Derived dictionary** ([`Ring/FromRing.agda`](src/Ring/FromRing.agda)). A `CommutativeRing`, decidable equality and a normalization with `normalize x ≈ x` give the executable `Operations` and all hypotheses of the correctness theorem.
+- **Arithmetic modulo p = k + 2** ([`Modular/Ring.agda`](src/Modular/Ring.agda), [`Modular/Correctness.agda`](src/Modular/Correctness.agda)). Naturals under stdlib's `_≡%[ p ]_` form a `CommutativeRing`; with reduction mod p as normalization, `Ring.FromRing` gives the theorem for every p ≥ 2. Primality is not assumed; composite moduli are accepted.
 
 The F₅ modules ([`Sumcheck.agda`](src/Sumcheck.agda), [`FieldLaws.agda`](src/FieldLaws.agda), [`Quest12Bridge.agda`](src/Quest12Bridge.agda)) prove the same equivalence by exhaustive computation.
 
