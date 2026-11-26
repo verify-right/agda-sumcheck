@@ -28,4 +28,6 @@ $$
 
 `linear-reconstruction` proves this identity over any commutative ring. `linear-interpolation` proves equivalence with the Lagrange formula.
 
+`coefficient-evaluation` packages these two representations as a stdlib isomorphism, proving that conversion in either direction preserves the polynomial.
+
 Proofs [Ring/Interpolation.agda](../src/Ring/Interpolation.agda).
