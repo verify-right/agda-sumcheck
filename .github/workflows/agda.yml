@@ -15,7 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: agda/agda-setup-action@v1
+        id: agda
         with:
           agda-version: '2.9.0'
+          agda-stdlib-version: '2.4.1'
+      - uses: actions/cache@v4
+        with:
+          path: ${{ steps.agda.outputs.agda-dir }}/libraries.d/agda-stdlib-2.4.1/_build
+          key: agda-2.9.0-stdlib-2.4.1
       - run: agda --version
       - run: agda --build-library

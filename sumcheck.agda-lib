@@ -1,2 +1,3 @@
 name: agda-sumcheck
+depend: standard-library-2.4
 include: src

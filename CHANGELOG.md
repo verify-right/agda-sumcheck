@@ -1,5 +1,13 @@
 # Changelog
 
+## Commutative-ring verifier and arithmetic modulo p ≥ 2
+
+- Verifier parameterised by ring operations, with separate challenge list.
+- Soundness and completeness over any commutative ring with setoid equality.
+- Naturals modulo p = k + 2 as a stdlib `CommutativeRing`.
+- Examples over F₂, F₅, F₁₇ and modulo 4.
+- Depends on the Agda standard library 2.4.
+
 ## Verified linear sumcheck over F₅
 
 - Field F₅ and it's arithmetic and linear interpolation.
