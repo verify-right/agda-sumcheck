@@ -88,6 +88,8 @@ Supports only linear round polynomials.
 Challenges are provided externally.  
 No probabilistic soundness, zero knowledge, correctness of extracted code.
 
+`verify-sound` and `verify-complete` state that the Boolean checker is equivalent to its acceptance specification (`Accepts`). They are not cryptographic soundness. That would bound the probability, over random challenges, that a false claim is accepted (Schwartz–Zippel; Thaler §4.1). It is not proved here.
+
 See [`dishonest-fixed-challenge-accepted`](src/Examples.agda) for why challenge selection matters.
 
 * References

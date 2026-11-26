@@ -1,10 +1,10 @@
 {-# OPTIONS --safe --without-K #-}
 module Examples where
 
-open import Agda.Builtin.Bool using (true; false)
-open import Agda.Builtin.Nat using (zero; suc)
-open import Agda.Builtin.List using (List; []; _∷_)
-open import Agda.Builtin.Equality using (_≡_; refl)
+open import Data.Bool.Base using (true; false)
+open import Data.Nat.Base using (zero; suc)
+open import Data.List.Base using (List; []; _∷_)
+open import Relation.Binary.PropositionalEquality using (_≡_; refl)
 open import Sumcheck
 
 -- p(x,y) = 1 + x + 2y + xy over F₅; its Boolean-hypercube sum is 1.

@@ -1,26 +1,12 @@
 {-# OPTIONS --safe --without-K #-}
 module Ring.Verifier where
 
-open import Agda.Builtin.Bool using (Bool; true; false)
-open import Agda.Builtin.Nat using (Nat; _+_; _==_)
-open import Agda.Builtin.List using (List; []; _∷_)
+open import Data.Bool.Base using (Bool; false; _∧_)
+open import Data.Nat.Base using (ℕ; _≡ᵇ_)
+open import Data.List.Base using (List; []; _∷_; length; reverse)
 
-both : Bool → Bool → Bool
-both true b = b
-both false b = false
-
-countRounds : {A : Set} → List A → Nat
-countRounds [] = 0
-countRounds (_ ∷ xs) = 1 + countRounds xs
-
-reverseOnto : {A : Set} → List A → List A → List A
-reverseOnto [] acc = acc
-reverseOnto (x ∷ xs) acc = reverseOnto xs (x ∷ acc)
-
-reverseList : {A : Set} → List A → List A
-reverseList xs = reverseOnto xs []
-
--- Kept separate from proofs so this record is an ordinary Haskell dictionary.
+-- Executable dictionary of ring operations. It carries no laws: proofs
+-- take them as separate hypotheses (see Ring.Correctness).
 record Operations (F : Set) : Set where
   constructor MkOperations
   field
@@ -44,13 +30,13 @@ lagrange op y0 y1 r = normalize op (add op (mul op (add op (one op) (neg op r)) 
 -- supplied. The lists must match and the number of rounds must be expected.
 verifyWith : {F : Set} → Operations F → (F → F → F → F) → (List F → F) →
   List F → F → List (Round F) → List F → Bool
-verifyWith op eval oracle seen claim [] [] = same op claim (oracle (reverseList seen))
+verifyWith op eval oracle seen claim [] [] = same op claim (oracle (reverse seen))
 verifyWith op eval oracle seen claim [] (_ ∷ _) = false
 verifyWith op eval oracle seen claim (_ ∷ _) [] = false
 verifyWith op eval oracle seen claim (MkRound y0 y1 ∷ rounds) (r ∷ challenges) =
-  both (same op claim (add op y0 y1))
-    (verifyWith op eval oracle (r ∷ seen) (eval y0 y1 r) rounds challenges)
+  same op claim (add op y0 y1) ∧
+    verifyWith op eval oracle (r ∷ seen) (eval y0 y1 r) rounds challenges
 
-verify : {F : Set} → Operations F → (List F → F) → Nat → F → List (Round F) → List F → Bool
+verify : {F : Set} → Operations F → (List F → F) → ℕ → F → List (Round F) → List F → Bool
 verify op oracle n claim rounds challenges =
-  both (n == countRounds rounds) (verifyWith op (interpolate op) oracle [] claim rounds challenges)
+  (n ≡ᵇ length rounds) ∧ verifyWith op (interpolate op) oracle [] claim rounds challenges

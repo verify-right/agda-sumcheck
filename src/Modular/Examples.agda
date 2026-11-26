@@ -1,26 +1,26 @@
 {-# OPTIONS --safe --without-K #-}
 module Modular.Examples where
 
-open import Agda.Builtin.Bool using (true; false)
-open import Agda.Builtin.Nat using (Nat; _+_; _*_)
-open import Agda.Builtin.List using (List; []; _∷_)
-open import Agda.Builtin.Equality using (_≡_; refl)
+open import Data.Bool.Base using (true; false)
+open import Data.Nat.Base using (ℕ; _+_; _*_)
+open import Data.List.Base using (List; []; _∷_)
+open import Relation.Binary.PropositionalEquality using (_≡_; refl)
 open import Ring.Verifier
-open import Modular.Operations using (operations; normalize)
+open import Modular.Operations using (operations)
 
 -- The same asymmetric p(x,y) in both fields: 1 + x + 2y + xy.
 -- Its integer hypercube sum is 11, hence 1 mod 5 and 11 mod 17.
-polynomial : Nat → Nat → Nat
+polynomial : ℕ → ℕ → ℕ
 polynomial x y = 1 + x + 2 * y + x * y
 
-oracle : List Nat → Nat
+oracle : List ℕ → ℕ
 oracle (x ∷ y ∷ []) = polynomial x y
 oracle _ = 0
 
-f5-rounds : List (Round Nat)
+f5-rounds : List (Round ℕ)
 f5-rounds = MkRound 4 2 ∷ MkRound 3 2 ∷ []
 
-f17-rounds : List (Round Nat)
+f17-rounds : List (Round ℕ)
 f17-rounds = MkRound 4 7 ∷ MkRound 3 7 ∷ []
 
 f5-honest : verify (operations 3) oracle 2 1 f5-rounds (2 ∷ 3 ∷ []) ≡ true
