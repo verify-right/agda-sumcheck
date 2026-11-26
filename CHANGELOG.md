@@ -1,10 +1,18 @@
 # Changelog
 
+## General-degree evaluation-form sumcheck
+
+- Lagrange interpolation on d + 1 nodes with certified weights: Kronecker node law, congruence, degree 0 and degree 1 special cases.
+- O(m) prefix/suffix-product barycentric evaluator, proved equal to the direct formula.
+- Evaluation-form verifier with per-round node sets and an exact-length boundary for received lists.
+- Verdict equals the circuit verifier for all transcripts under a fixed node set.
+- F₁₇ examples, including z-lean Examples 1 and 3, mixed degrees and a composite modulus.
+
 ## Evaluation-form bridge
 
 - The linear verifier on value pairs agrees with the circuit verifier at degree bound 1, for arbitrary transcripts.
 - Certified-linear circuit messages encode to value pairs with the same verdict.
-- Degree-0 evaluation-form verifier with an equal-endpoints check, equivalent to the circuit verifier at bound 0.
+- Degree-0 evaluation-form verifier with an equal-endpoints check; equivalent to the circuit verifier at bound 0 for transcripts with equal endpoint pairs.
 - Acceptance counting is deferred.
 
 ## Arbitrary-degree sumcheck and honest-prover completeness
@@ -18,7 +26,7 @@
 ## Commutative-ring verifier and arithmetic modulo p ≥ 2
 
 - Verifier parameterised by ring operations, with separate challenge list.
-- Soundness and completeness over any commutative ring with setoid equality.
+- Verifier/specification equivalence over commutative rings with decidable setoid equality.
 - Naturals modulo p = k + 2 as a stdlib `CommutativeRing`.
 - Examples over F₂, F₅, F₁₇ and modulo 4.
 - Depends on the Agda standard library 2.4.
