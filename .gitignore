@@ -6,3 +6,6 @@ _build/
 sumcheck-smoke
 sumcheck-properties
 dist-newstyle/
+
+.idea
+*.iml
