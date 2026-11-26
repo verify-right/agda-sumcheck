@@ -1,5 +1,13 @@
 # Changelog
 
+## General-degree evaluation-form sumcheck
+
+- Lagrange interpolation on d + 1 nodes with certified weights: Kronecker node law, congruence, degree 0 and degree 1 special cases.
+- O(m) prefix/suffix-product barycentric evaluator, proved equal to the direct formula.
+- Evaluation-form verifier with per-round node sets and an exact-length boundary for received lists.
+- Verdict equals the circuit verifier at uniform degree bound d for all transcripts.
+- F₁₇ examples, including z-lean Examples 1 and 3, mixed degrees and a composite modulus.
+
 ## Evaluation-form bridge
 
 - The linear verifier on value pairs agrees with the circuit verifier at degree bound 1, for arbitrary transcripts.
