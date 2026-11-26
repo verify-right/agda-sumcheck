@@ -19,17 +19,32 @@ module Correctness {F : Set} (op : Operations F) (_≈_ : F → F → Set)
   (interpolation-correct : (a b r : F) → interpolate op a b r ≈ lagrange op a b r)
   where
 
+  -- Verifier congruence: pointwise-equivalent round evaluators and oracles,
+  -- started from equivalent claims, give the same verdict on every transcript.
+  verifyWith-cong : (eval eval' : F → F → F → F) (oracle oracle' : List F → F) →
+    ((a b r : F) → eval a b r ≈ eval' a b r) →
+    ((point : List F) → oracle point ≈ oracle' point) →
+    (seen : List F) (left right : F) → left ≈ right →
+    (rounds : List (Round F)) (challenges : List F) →
+    verifyWith op eval oracle seen left rounds challenges ≡
+    verifyWith op eval' oracle' seen right rounds challenges
+  verifyWith-cong eval eval' oracle oracle' evals oracles seen left right left≈right [] [] =
+    same-cong left≈right (oracles (reverse seen))
+  verifyWith-cong eval eval' oracle oracle' evals oracles seen left right left≈right [] (_ ∷ _) = refl
+  verifyWith-cong eval eval' oracle oracle' evals oracles seen left right left≈right (_ ∷ _) [] = refl
+  verifyWith-cong eval eval' oracle oracle' evals oracles seen left right left≈right
+    (MkRound y0 y1 ∷ rest) (r ∷ rs) =
+    cong₂ _∧_ (same-cong left≈right (≈-refl (add op y0 y1)))
+      (verifyWith-cong eval eval' oracle oracle' evals oracles (r ∷ seen)
+        (eval y0 y1 r) (eval' y0 y1 r) (evals y0 y1 r) rest rs)
+
+  -- The optimized interpolator and the Lagrange specification agree.
   agree : (oracle : List F → F) (seen : List F) (left right : F) →
     left ≈ right → (rounds : List (Round F)) (challenges : List F) →
     verifyWith op (interpolate op) oracle seen left rounds challenges ≡
     verifyWith op (lagrange op) oracle seen right rounds challenges
-  agree oracle seen left right left≈right [] [] = same-cong left≈right (≈-refl (oracle (reverse seen)))
-  agree oracle seen left right left≈right [] (_ ∷ _) = refl
-  agree oracle seen left right left≈right (_ ∷ _) [] = refl
-  agree oracle seen left right left≈right (MkRound y0 y1 ∷ rest) (r ∷ rs) =
-    cong₂ _∧_ (same-cong left≈right (≈-refl (add op y0 y1)))
-      (agree oracle (r ∷ seen) (interpolate op y0 y1 r) (lagrange op y0 y1 r)
-        (interpolation-correct y0 y1 r) rest rs)
+  agree oracle = verifyWith-cong (interpolate op) (lagrange op) oracle oracle
+    interpolation-correct (λ point → ≈-refl (oracle point))
 
   data Checks (oracle : List F → F) : List F → F → List (Round F) → List F → Set where
     final : {seen : List F} {claim : F} → claim ≈ oracle (reverse seen) →
@@ -87,13 +102,9 @@ module Correctness {F : Set} (op : Operations F) (_≈_ : F → F → Set)
     (seen : List F) (claim : F) (rounds : List (Round F)) (challenges : List F) →
     verifyWith op (interpolate op) left seen claim rounds challenges ≡
     verifyWith op (interpolate op) right seen claim rounds challenges
-  oracle-cong left right pointwise seen claim [] [] =
-    same-cong (≈-refl claim) (pointwise (reverse seen))
-  oracle-cong left right pointwise seen claim [] (_ ∷ _) = refl
-  oracle-cong left right pointwise seen claim (_ ∷ _) [] = refl
-  oracle-cong left right pointwise seen claim (MkRound y0 y1 ∷ rest) (r ∷ rs) =
-    cong (same op claim (add op y0 y1) ∧_)
-      (oracle-cong left right pointwise (r ∷ seen) (interpolate op y0 y1 r) rest rs)
+  oracle-cong left right pointwise seen claim =
+    verifyWith-cong (interpolate op) (interpolate op) left right
+      (λ a b r → ≈-refl (interpolate op a b r)) pointwise seen claim claim (≈-refl claim)
 
   verify-oracle-cong : (left right : List F → F) →
     ((point : List F) → left point ≈ right point) →
