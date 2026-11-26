@@ -1,6 +1,6 @@
 # General-degree evaluation form
 
-A round polynomial $g$ of degree at most $d$ is determined by its values $y_i = g(x_i)$ at $d+1$ distinct nodes $x_0,\dots,x_d$. The verifier receives the values and must compute $g(0)+g(1)$ and $g(r)$.
+A round polynomial $g$ of degree at most $d$ is determined by its values at $d+1$ distinct nodes over a field, or nodes with pairwise invertible differences over a commutative ring. The verifier receives the values $y_i = g(x_i)$ and computes $g(0)+g(1)$ and $g(r)$.
 
 ## Lagrange basis in barycentric form
 
@@ -25,13 +25,13 @@ which is the two-point formula of [Linear interpolation over rings](002_ring-int
 
 ## Linear-time evaluation
 
-Each $\ell_i(r)$ is a prefix product $\prod_{j<i}(r-x_j)$ times a suffix product $\prod_{j>i}(r-x_j)$. One pass carries the prefix forward and returns the suffix backward, so evaluation costs $O(d)$ ring operations once weights are known. There is no division by $r-x_i$, so a challenge equal to a node needs no special case. `evalAt-correct` proves equality with the direct formula. These are operation counts, not bit complexity or measurements.
+Each $\ell_i(r)$ is a prefix product $\prod_{j<i}(r-x_j)$ times a suffix product $\prod_{j>i}(r-x_j)$. One pass carries the prefix forward and returns the suffix backward, so evaluation costs $O(d+1)$ ring operations once weights are known. There is no division by $r-x_i$, so a challenge equal to a node needs no special case. `evalAt-correct` proves equality with the direct formula. These are operation counts, not bit complexity or measurements.
 
 ## Verifier and circuit verifier
 
 For Example 3 of z-lean, $p(x,y,z)=x^2y+z$ over $\{0,1\}^3$ sums to 6. The first round sends $g_1(0),g_1(1),g_1(2)=2,4,10$ for $g_1(X)=2X^2+2$. The verifier checks $2+4=6$, receives $r_1=2$, and continues with $g_1(2)=10$.
 
-On the proof side, each tuple is decoded into a sum of basis-term circuits, one leaf per term, each of degree $d$. `verify-equivalent` states that, for a uniform degree bound, the evaluation-form verdict equals the circuit verifier's verdict for every received transcript, including malformed and adversarial ones.
+On the proof side, each tuple is decoded into a sum of basis-term circuits, one leaf per term, each of degree $d$. `verify-equivalent` states that, for a fixed node set shared by all rounds, the evaluation-form verdict equals the circuit verifier's verdict for every received transcript, including malformed and adversarial ones. Uniqueness of degree-bounded interpolants and reconstruction of arbitrary bounded circuits from their node values are not yet proved.
 
 Proofs: [Ring/Lagrange.agda](../src/Ring/Lagrange.agda), [Circuit/Barycentric.agda](../src/Circuit/Barycentric.agda).
 

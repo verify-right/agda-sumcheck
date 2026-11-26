@@ -343,7 +343,7 @@ decodeList : Config → List Carrier → C.Message Carrier
 decodeList (d , ns) m = decodeTuple ns (exactly (suc d) m)
 
 ------------------------------------------------------------------------
--- Representation theorem: for a uniform degree bound d, on the Boolean
+-- Representation theorem: for a fixed node set shared by all rounds d, on the Boolean
 -- domain, with the same final oracle, the evaluation-form verdict equals
 -- the circuit verdict for every list of received lists and challenges.
 
