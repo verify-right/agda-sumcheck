@@ -1,5 +1,12 @@
 # Changelog
 
+## Evaluation-form bridge
+
+- The linear verifier on value pairs agrees with the circuit verifier at degree bound 1, for arbitrary transcripts.
+- Certified-linear circuit messages encode to value pairs with the same verdict.
+- Degree-0 evaluation-form verifier with an equal-endpoints check, equivalent to the circuit verifier at bound 0.
+- Acceptance counting is deferred.
+
 ## Arbitrary-degree sumcheck and honest-prover completeness
 
 - Circuit polynomials, sum-tree round messages and an executable honest prover.
