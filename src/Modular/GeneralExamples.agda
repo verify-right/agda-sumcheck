@@ -134,7 +134,7 @@ quartic = B.nodeSet (0 ∷ 1 ∷ 2 ∷ 3 ∷ 4 ∷ []) (GC.weightsFor (invMod 15
 module Circuits where
   open C
 
-  -- X² - X² + X: degree 1, but four occurrences of X.
+  -- X² - X² + X: degree 1, but four occurrences of X in the first leaf.
   cancelling : Message ℕ
   cancelling = Branch (Leaf (UAdd (UMul UVar UVar) (UNeg (UMul UVar UVar)))) (Leaf UVar)
 

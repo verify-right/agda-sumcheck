@@ -35,7 +35,7 @@ The F₅ modules ([`Sumcheck.agda`](src/Sumcheck.agda), [`FieldLaws.agda`](src/F
 
 These results establish verifier/specification equivalence and honest-prover completeness, not cryptographic soundness. Cryptographic soundness would bound the probability, over random challenges, that a false claim is accepted (Schwartz–Zippel; Thaler §4.1). [`dishonest-fixed-challenge-accepted`](src/Examples.agda) shows a false claim passing with fixed challenges. Challenge generation, zero knowledge and extracted code are also not covered.
 
-The circuit degree check counts variable occurrences in each univariate leaf, giving a conservative bound rather than the exact polynomial degree. A bridge to formal polynomial degree is not proved. The honest prover enumerates the Boolean cube, so both computation and round-message size grow exponentially with the number of remaining variables. Out-of-range variables evaluate to zero.
+The circuit degree check counts variable occurrences in each univariate leaf, giving a conservative bound rather than the exact polynomial degree. Normalization into bounded coefficient representations is proved; exact polynomial degree is not computed. The honest prover enumerates the Boolean cube, so both computation and round-message size grow exponentially with the number of remaining variables. Out-of-range variables evaluate to zero.
 
 Weights are computed by `setup` from a supplied inversion procedure and always validated by `certify?`; the modular examples invert by finite search, not by extended GCD. Polynomials are circuits with positional variables defaulting to zero out of range; they model z-lean's `Fin n` variables only at the intended arity. The degree bounds are occurrence counts, not z-lean's exact `degreeOf`.
 

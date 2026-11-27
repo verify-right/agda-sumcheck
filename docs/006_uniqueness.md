@@ -16,7 +16,7 @@ Together with the node law of [General-degree evaluation form](005_barycentric.m
 
 ## Reconstructing circuits
 
-A round circuit that passes the degree check at $d$ normalizes to $d+1$ coefficients. Its node values therefore determine it, and barycentric evaluation of those values reproduces it at every point (`reconstruction`). For $X^2-X^2+X$ the occurrence count is 4: the check rejects it at $d=1$, and accepts it at $d=4$, where reconstruction returns $r$.
+A round circuit that passes the degree check at $d$ normalizes to $d+1$ coefficients. Its node values therefore determine it, and barycentric evaluation of those values reproduces it at every point (`reconstruction`). For $X^2-X^2+X$, represented as two leaves $X^2-X^2$ and $X$, the maximum leaf occurrence count is 4: the check rejects it at $d=1$, and accepts it at $d=4$, where reconstruction returns $r$.
 
 ## The general verifier
 
