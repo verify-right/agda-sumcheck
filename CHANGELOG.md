@@ -1,5 +1,14 @@
 # Changelog
 
+## Verified evaluation-form verifier: uniqueness, reconstruction, general protocol
+
+- Dense polynomials ported from Quest 28; certified weights give unit node differences; synthetic division as a coefficient identity.
+- Uniqueness of interpolants over commutative rings and the coefficient–evaluation `Inverse`.
+- Coefficient normalization of circuits and reconstruction of every degree-checked message from its node values.
+- General symbolic and evaluation-form verifiers: per-round bounds and node sets, arbitrary domain lists, partial runs with residual sums; verdict equality, malformed-input rejection, legacy specializations.
+- Honest-prover completeness under per-variable bounds, transferred to evaluation form; certified weight setup.
+- Tests in F₁₇ and ℤ/15, including z-lean Example 3 with bounds (2, 1, 1) and stops k = 0…3.
+
 ## General-degree evaluation-form sumcheck
 
 - Lagrange interpolation on d + 1 nodes with certified weights: Kronecker node law, congruence, degree 0 and degree 1 special cases.
